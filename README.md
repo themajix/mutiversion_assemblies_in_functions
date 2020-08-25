@@ -13,11 +13,11 @@ The thrown exception is: System.MissingMethodException: Method not found: 'Syste
 
 In order to prevent the exception, right after starting project,  FunctionTests,call an endpoint which calls Lib56 first. Such endpoints are CallLib56 and MixedCalls2. Once any of these endpoints is called, all subsequent calls to both Lib55 and Lib56 will go through successfully.
 
-It is important to note that the presence of the following line of code is necessary to always successfully replicate the problem successfully:
+It is important to note that the presence of the following line of code is necessary to always replicate the problem successfully:
 
 var assembly = Assembly.GetAssembly(typeof(OpenIdConnectConfiguration));
 
-The placement of this line of code in the source code of the function does not really mater, even if it appears after call to a method in Lib55. (currently it is in the catch block).
+The placement of this line of code in the source code of the function does not really mater, even if it appears after call to a method in Lib55, which causes the exception. (currently it is in the catch block).
 However, there have been cases that even without that line of code, the exception has thrown, but this happens randomely. 
 
 
