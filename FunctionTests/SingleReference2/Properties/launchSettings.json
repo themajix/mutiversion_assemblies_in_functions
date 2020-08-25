@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SingleReference2": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --port 7073"
+    }
+  }
+}
