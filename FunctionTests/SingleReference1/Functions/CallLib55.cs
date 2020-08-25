@@ -45,6 +45,15 @@ namespace SingleReference1.Functions
                 log.LogError(ex.ToString());
                 log.LogWarning("===== AFTER THROWING THE EXCEPTION ====================================================");
                 LogUtil.LogLoadedAssemblies(log, assemblyName);
+
+                // READ IMPORTANT NOTE ABOUT THE FOLLOWING LINE OF CODE IN README.MD
+                //the class OpenIdConnectConfiguration resides in Microsoft.IdentityModel.Protocols.OpenIdConnect
+                var assembly = Assembly.GetAssembly(typeof(OpenIdConnectConfiguration));
+                log.LogWarning(
+                    assembly != null
+                        ? $"{assembly.FullName} is loaded in the AssemblyLoadContext: #{assembly.HostContext}"
+                        : "Microsoft.IdentityModel.Protocols.OpenIdConnect is not loaded.");
+
                 return new InternalServerErrorResult();
             }
         }

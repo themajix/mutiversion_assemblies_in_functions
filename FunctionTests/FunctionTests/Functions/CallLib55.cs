@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Lib55;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace FunctionTests.Functions
 {
@@ -43,6 +45,15 @@ namespace FunctionTests.Functions
                 log.LogError(ex.ToString());
                 log.LogWarning("===== AFTER THROWING THE EXCEPTION ====================================================");
                 LogUtil.LogLoadedAssemblies(log, assemblyName);
+
+                // READ IMPORTANT NOTE ABOUT THE FOLLOWING LINE OF CODE IN README.MD
+                //the class OpenIdConnectConfiguration resides in Microsoft.IdentityModel.Protocols.OpenIdConnect
+                var assembly = Assembly.GetAssembly(typeof(OpenIdConnectConfiguration));
+                log.LogWarning(
+                    assembly != null
+                        ? $"{assembly.FullName} is loaded in the AssemblyLoadContext: #{assembly.HostContext}"
+                        : "Microsoft.IdentityModel.Protocols.OpenIdConnect is not loaded.");
+
                 return new InternalServerErrorResult();
             }
         }
